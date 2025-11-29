@@ -1,20 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Quicksand } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const quicksandFont = Quicksand({
+  weight: ["400", "600", "700"],
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const _mali = Mali({ weight: ["400", "600", "700"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "FarmQuest - Learn Sustainable Farming",
+  title: "Farmstellar - Learn Sustainable Farming",
   description: "Gamified farming education app for beginners",
 };
 
@@ -25,9 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${quicksandFont.className}  antialiased`}>
         {children}
         <Analytics />
       </body>

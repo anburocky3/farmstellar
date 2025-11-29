@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    "app/(farmer)/settings/profile/page.jsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -57,7 +57,7 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 overflow-hidden">
+    <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/30 overflow-hidden">
       {/* Animated Background Elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-20 left-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl animate-float-gentle"></div>
@@ -69,11 +69,11 @@ export default function LandingPage() {
       <nav className="relative z-10 container mx-auto px-6 py-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg">
+            <div className="w-12 h-12 bg-linear-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg">
               <Sprout className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold bg-linear-to-r from-primary to-accent bg-clip-text text-transparent">
                 FarmStellar
               </h1>
               <p className="text-xs text-muted-foreground">
@@ -120,7 +120,7 @@ export default function LandingPage() {
               <div className="space-y-4">
                 <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
                   Master{" "}
-                  <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-shimmer">
+                  <span className="bg-linear-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-shimmer">
                     Sustainable Farming
                   </span>{" "}
                   Through Play
@@ -182,7 +182,7 @@ export default function LandingPage() {
             <div className="relative">
               <div className="relative w-full aspect-square max-w-lg mx-auto">
                 {/* Central Circle */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute inset-0 bg-linear-to-br from-primary/20 to-accent/20 rounded-full blur-3xl animate-pulse"></div>
 
                 {/* Floating Icons */}
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -312,7 +312,7 @@ export default function LandingPage() {
       <section className="relative z-10 py-24">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-gradient-to-br from-primary via-primary to-accent rounded-3xl p-12 md:p-16 text-center shadow-2xl relative overflow-hidden">
+            <div className="bg-linear-to-br from-primary via-primary to-accent rounded-3xl p-12 md:p-16 text-center shadow-2xl relative overflow-hidden">
               {/* Background Pattern */}
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-10 left-10 w-20 h-20 border-4 border-white rounded-full"></div>
@@ -350,7 +350,7 @@ export default function LandingPage() {
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center">
+                <div className="w-10 h-10 bg-linear-to-br from-primary to-accent rounded-xl flex items-center justify-center">
                   <Sprout className="w-6 h-6 text-white" />
                 </div>
                 <div>
