@@ -5,6 +5,7 @@ import LeaderboardCard from "../../../components/app/leaderboard-card";
 import { UserProgressCard } from "../../../components/app/user-progress-card";
 import { WeatherAlertCard } from "../../../components/app/weather-alert-card";
 import { OngoingQuestsCard } from "../../../components/app/ongoing-quests-card";
+import { getGreeting } from "../../../lib/utils";
 
 export default function FarmerDashboard({ userData, onStartQuest }) {
   const handleResumeQuest = (questId) => {
@@ -26,7 +27,7 @@ export default function FarmerDashboard({ userData, onStartQuest }) {
               <div className="flex items-center gap-2">
                 <Sun className="w-4 h-4 text-accent" />
                 <h1 className="text-lg sm:text-xl font-bold text-foreground">
-                  Good Morning, {userData?.name || "Farmer"}!
+                  {getGreeting()}, {userData?.name || "Farmer"}!
                 </h1>
               </div>
               <p className="text-xs text-muted-foreground">
