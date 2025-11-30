@@ -25,7 +25,7 @@ export default function FarmerDashboard({ userData, onStartQuest }) {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <Sun className="w-4 h-4 text-accent" />
+                {/* <Sun className="w-4 h-4 text-accent" /> */}
                 <h1 className="text-lg sm:text-xl font-bold text-foreground">
                   {getGreeting()}, {userData?.name || "Farmer"}!
                 </h1>
