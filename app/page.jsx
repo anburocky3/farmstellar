@@ -15,22 +15,17 @@ import {
   Award,
   Globe,
 } from "lucide-react";
+
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import LanguageSelector from "@/components/ui/LanguageSelector";
 
 export default function LandingPage() {
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  // useEffect(() => {
-  //   // Check if user is authenticated
-  //   const auth = localStorage.getItem("farmquest_auth");
-  //   if (auth) {
-  //     setIsAuthenticated(true);
-  //   }
-  //   setIsLoading(false);
-  // }, []);
 
   const handleGetStarted = () => {
     if (isAuthenticated) {
@@ -82,25 +77,18 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {isAuthenticated ? (
-            <Button onClick={handleGetStarted} className="btn-primary">
-              Go to Dashboard
+          <div className="flex gap-3 items-center">
+            <a
+              href="/welcome"
+              className="btn-primary inline-flex items-center px-4 py-2 rounded-md"
+            >
+              {t("nav.signIn")}
               <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
-          ) : (
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
-                onClick={() => router.push("/welcome")}
-                className="border-2 hover:bg-secondary/20"
-              >
-                Sign In
-              </Button>
-              <Button onClick={handleGetStarted} className="btn-primary">
-                Get Started
-              </Button>
+            </a>
+            <div className="flex items-center gap-2">
+              <LanguageSelector />
             </div>
-          )}
+          </div>
         </div>
       </nav>
 
@@ -112,47 +100,37 @@ export default function LandingPage() {
             <div className="space-y-8">
               <div className="inline-flex items-center gap-2 bg-accent/20 text-accent-foreground px-4 py-2 rounded-full border border-accent/30">
                 <Sparkles className="w-4 h-4" />
-                <span className="text-sm font-semibold">
-                  Gamified Learning Platform
-                </span>
+                <span className="text-sm font-semibold">{t("hero.badge")}</span>
               </div>
 
               <div className="space-y-4">
                 <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
-                  Master{" "}
-                  <span className="bg-linear-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-shimmer">
-                    Sustainable Farming
-                  </span>{" "}
-                  Through Play
+                  {t("hero.title")}
                 </h1>
                 <p className="text-xl text-muted-foreground leading-relaxed">
-                  Join thousands of farmers learning modern agricultural
-                  techniques through interactive quests, earn rewards, and build
-                  a sustainable future.
+                  {t("hero.subtitle")}
                 </p>
               </div>
 
               <div className="flex flex-wrap gap-4">
-                <Button
-                  onClick={handleGetStarted}
-                  size="lg"
-                  className="btn-primary text-lg px-8 py-6 shadow-xl hover:shadow-2xl"
+                <a
+                  href="/welcome"
+                  className="btn-primary inline-flex items-center text-lg px-8 py-6 shadow-xl hover:shadow-2xl rounded-md"
                 >
-                  Start Your Journey
+                  {t("hero.startJourney")}
                   <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
+                </a>
+                <button
+                  type="button"
                   onClick={() =>
                     document
                       .getElementById("features")
                       .scrollIntoView({ behavior: "smooth" })
                   }
-                  className="border-2 text-lg px-8 py-6"
+                  className="border-2 text-lg px-8 py-6 rounded-md"
                 >
-                  Learn More
-                </Button>
+                  {t("hero.learnMore")}
+                </button>
               </div>
 
               {/* Stats */}
@@ -329,14 +307,13 @@ export default function LandingPage() {
                   sustainable, profitable farming.
                 </p>
                 <div className="pt-4">
-                  <Button
-                    onClick={handleGetStarted}
-                    size="lg"
-                    className="bg-white text-primary hover:bg-white/90 text-lg px-10 py-7 shadow-xl hover:shadow-2xl hover:scale-105 transition-all"
+                  <a
+                    href="/welcome"
+                    className="bg-white text-primary hover:bg-white/90 text-lg px-10 py-7 shadow-xl hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center rounded-md"
                   >
-                    Start Learning Now
+                    {t("hero.startLearningNow")}
                     <ArrowRight className="ml-2 w-5 h-5" />
-                  </Button>
+                  </a>
                 </div>
               </div>
             </div>

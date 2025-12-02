@@ -1,0 +1,28 @@
+{
+  "site": {
+    "name": "FarmStellar",
+    "tagline": "Grow Your Knowledge"
+  },
+  "nav": {
+    "signIn": "Sign In",
+    "goToDashboard": "Go to Dashboard",
+    "changeLanguage": "Change Language"
+  },
+  "hero": {
+    "badge": "Gamified Learning Platform",
+    "title": "Master Sustainable Farming Through Play",
+    "subtitle": "Join thousands of farmers learning modern agricultural techniques through interactive quests, earn rewards, and build a sustainable future.",
+    "startJourney": "Start Your Journey",
+    "learnMore": "Learn More",
+    "startLearningNow": "Start Learning Now"
+  },
+  "stats": {
+    "activeFarmers": "Active Farmers",
+    "learningQuests": "Learning Quests",
+    "successRate": "Success Rate"
+  },
+  "footer": {
+    "copyright": "© 2025 FarmStellar. All rights reserved.",
+    "mission": "Empowering farmers through gamified learning"
+  }
+}
