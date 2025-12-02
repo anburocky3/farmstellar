@@ -1,0 +1,31 @@
+For now, this is the planned workflow.
+
+1. Farmer lands on landing page
+
+2. Farmer visit login page on top navigation and it will ask his mobile number, once entered, it will generate OTP, once the user enters the OTP, if the user is new user, it will show onboarding page where it will ask to choose if he is beginner or pro farmer, on what ever selections, it will show the form where he has the enter the following informations like farm name, location, land size, soil type, water source etc. If he doesnt owns farm, he can also choos "I' dont have farm" and skip this step.
+
+3. Then it will ask permissions like location access, push notifications, camera acces, this should be one time.
+
+4. It will show the dashboard where it will have XP progress bar, weather api, Ongoing quests, your achievements so far, regional & global leaderboard, etc.
+
+5. It will have sidebar where it will have quests, community, rewards. profile, settings and helps menus.  On sidebar top header, we do have farmer card like name, level and location.
+
+6. Since this is PWA app, we like to bring app like experiences.
+
+
+
+Quest page: List all farming quests with beginner level, advanced level, with various categories like Crop type. And one quest can have many activities, once they click on any quest, it will open quest detail page and they have to perform all the activities like we shown with valid proof, for now we have image upload feature where he will send his proof and it will be verified by admin for now. Maybe in future we can automate this by AI verifications.
+
+
+
+2.  Community page: we list all community posts and we can see how our friends are progressing on the quest with the updates.
+
+3. Rewards & Redeem page: they can see the list of rewards they have earned. They can also redeem from the experience they earned.
+
+4. Profile, settings, help are pages that they can edit their farmer details, modify the app language, theme and quick information docs. 
+
+
+
+This is the entire app for now.
+
+Use AI, AR wherever we can, make it innovative

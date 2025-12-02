@@ -7,18 +7,18 @@ import NavigationMenu from "../../../components/common/navigation-menu";
 export default function ProtectedLayout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState(true);
 
-  useEffect(() => {
-    const auth = localStorage.getItem("farmquest_auth");
-    if (!auth) {
-      router.push("/welcome");
-      return;
-    }
+  // useEffect(() => {
+  //   const auth = localStorage.getItem("farmquest_auth");
+  //   if (!auth) {
+  //     router.push("/welcome");
+  //     return;
+  //   }
 
-    const data = JSON.parse(localStorage.getItem("farmquest_userdata") || "{}");
-    setUserData(data);
-  }, [router]);
+  //   const data = JSON.parse(localStorage.getItem("farmquest_userdata") || "{}");
+  //   setUserData(data);
+  // }, [router]);
 
   const handleLogout = () => {
     localStorage.removeItem("farmquest_auth");

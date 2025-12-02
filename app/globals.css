@@ -449,3 +449,9 @@
     @apply grid gap-8;
   }
 }
+
+/* Hide content until client i18n initialization finishes to avoid language flash */
+html:not([data-i18n="ready"]) body > * {
+  visibility: hidden;
+}
+

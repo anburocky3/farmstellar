@@ -98,7 +98,7 @@ export default function PermissionsScreen() {
           </Button>
           <Button
             variant="ghost"
-            onClick={() => router.push("//dashboard")}
+            onClick={() => router.push("/dashboard")}
             className="w-full"
           >
             Skip for Now
