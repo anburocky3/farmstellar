@@ -93,9 +93,9 @@ export default function PWAProvider() {
           id="pwa-install-banner"
           style={{
             position: "fixed",
-            left: "12px",
-            right: "12px",
-            bottom: "20px",
+            left: "600px",
+            right: "600px",
+            bottom: "60px",
             zIndex: 9999,
             background: "white",
             color: "#064e3b",
@@ -109,27 +109,13 @@ export default function PWAProvider() {
           }}
         >
           <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-            <div
-              style={{
-                width: 44,
-                height: 44,
-                borderRadius: 10,
-                background: "#4CAF50",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
-                fontWeight: 700,
-              }}
-            >
-              <img
-                src="/icons/icon-192.svg"
-                alt="App Icon"
-                width={32}
-                height={32}
-                style={{ display: "block" }}
-              />
-            </div>
+            <img
+              src="/logo.png"
+              alt="Farmstellar Logo"
+              width={44}
+              height={44}
+              style={{ display: "block" }}
+            />
             <div style={{ fontSize: 14 }}>
               <div style={{ fontWeight: 700 }}>Install Farmstellar</div>
               <div style={{ fontSize: 13, color: "#334155" }}>

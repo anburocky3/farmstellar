@@ -3,10 +3,23 @@
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
-export default function LoginCard({ OTPSent }) {
-  const [phone, setPhone] = useState("");
+export default function LoginCard({ phone: initialPhone, OTPSent }) {
+  const { t } = useTranslation();
+  const [phone, setPhone] = useState(initialPhone || "");
+
+  useEffect(() => {
+    // Only update internal state when the incoming prop actually changes.
+    if ((initialPhone || "") !== phone) {
+      setPhone(initialPhone || "");
+    }
+    // We intentionally only depend on initialPhone so typing won't continuously
+    // trigger updates; comparison ensures we don't overwrite user input.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialPhone]);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handlePhonePaste = (e) => {
@@ -30,7 +43,7 @@ export default function LoginCard({ OTPSent }) {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2">
         <Label htmlFor="phone" className="font-semibold">
-          Mobile Number
+          {t("login.mobileLabel")}
         </Label>
         <div className="relative mt-2">
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-base!">
@@ -41,7 +54,7 @@ export default function LoginCard({ OTPSent }) {
             type="tel"
             inputMode="numeric"
             maxLength={10}
-            placeholder="9876543210"
+            placeholder={t("login.placeholder")}
             value={phone}
             onChange={(e) =>
               setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))
@@ -53,7 +66,7 @@ export default function LoginCard({ OTPSent }) {
         </div>
         {phone.length > 0 && phone.length !== 10 && (
           <p className="text-xs text-medium text-destructive">
-            Please enter a valid 10-digit phone number
+            {t("login.invalidPhone")}
           </p>
         )}
       </div>
@@ -63,10 +76,10 @@ export default function LoginCard({ OTPSent }) {
         className="w-full font-semibold text-base!"
         disabled={phone.length !== 10 || isSubmitting}
       >
-        {isSubmitting ? "Sending OTP..." : "Continue"}
+        {isSubmitting ? t("login.sendingOTP") : t("login.continue")}
       </Button>
-      <p className="text-medium text-shadow-green-800 mt-8 text-center">
-        Learn. Grow. Sustain.
+      <p className="text-medium text-shadow-green-800 mt-4 sm:mt-8 text-center">
+        {t("login.footerTagline")}
       </p>
     </form>
   );

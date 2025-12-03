@@ -12,7 +12,7 @@ export default function ProtectedLayout({ children }) {
   // useEffect(() => {
   //   const auth = localStorage.getItem("farmquest_auth");
   //   if (!auth) {
-  //     router.push("/welcome");
+  //     router.push("/login");
   //     return;
   //   }
 
@@ -23,7 +23,7 @@ export default function ProtectedLayout({ children }) {
   const handleLogout = () => {
     localStorage.removeItem("farmquest_auth");
     localStorage.removeItem("farmquest_userdata");
-    router.push("/welcome");
+    router.push("/login");
   };
 
   const handleNavigate = (screen) => {

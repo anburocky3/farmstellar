@@ -40,12 +40,12 @@ export default function LanguageSelector({ className = "" }) {
   const current = (i18n.language && i18n.language.split("-")[0]) || "en";
 
   return (
-    <div className={"inline-block " + className}>
+    <div className={" inline-block " + className}>
       <select
         aria-label="Select language"
         value={current}
         onChange={onChange}
-        className="rounded-md border p-2 bg-transparent text-sm"
+        className="rounded-md border p-2 bg-transparent text-sm font-semibold"
       >
         {Object.entries(LANG_NAMES).map(([code, label]) => (
           <option key={code} value={code}>
