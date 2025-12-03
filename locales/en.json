@@ -16,6 +16,40 @@
     "learnMore": "Learn More",
     "startLearningNow": "Start Learning Now"
   },
+  "loading": "Loading...",
+  "features": {
+    "heading": "Why Choose FarmStellar?",
+    "subheading": "Experience a revolutionary approach to agricultural education",
+    "feature1": {
+      "title": "Interactive Quests",
+      "desc": "Learn through engaging, story-driven quests that make agricultural education fun and memorable."
+    },
+    "feature2": {
+      "title": "Earn Rewards",
+      "desc": "Complete quests to earn points, badges, and unlock advanced farming techniques."
+    },
+    "feature3": {
+      "title": "Community Learning",
+      "desc": "Connect with fellow farmers, share experiences, and grow together as a community."
+    },
+    "feature4": {
+      "title": "Track Progress",
+      "desc": "Monitor your learning journey with detailed analytics and personalized insights."
+    },
+    "feature5": {
+      "title": "Certifications",
+      "desc": "Earn recognized certifications as you master sustainable farming practices."
+    },
+    "feature6": {
+      "title": "Multilingual Support",
+      "desc": "Learn in your preferred language with support for multiple regional languages."
+    }
+  },
+  "cta": {
+    "title": "Ready to Transform Your Farming?",
+    "subtitle": "Join FarmStellar today and start your journey towards sustainable, profitable farming.",
+    "button": "Start Learning Now"
+  },
   "stats": {
     "activeFarmers": "Active Farmers",
     "learningQuests": "Learning Quests",
@@ -31,5 +65,39 @@
     "source_nav": "based on your browser language",
     "open_settings": "Open Settings",
     "dismiss": "Dismiss"
+  },
+
+  "login": {
+    "mobileLabel": "Mobile Number",
+    "placeholder": "9876543210",
+    "invalidPhone": "Please enter a valid 10-digit phone number",
+    "sendingOTP": "Sending OTP...",
+    "continue": "Continue",
+    "footerTagline": "Learn. Grow. Sustain."
+  },
+  "verify": {
+    "changeMobileTitle": "Change Mobile number",
+    "title": "Verify OTP",
+    "instructions": "Enter the 6-digit code sent to",
+    "verifyButton": "Verify OTP",
+    "verifying": "Verifying...",
+    "resendIn": "Resend OTP in {{seconds}}s",
+    "resendButton": "Resend OTP",
+    "changePhone": "Change Phone Number"
+  },
+  "onboarding": {
+    "heading": "What's Your Farming Experience?",
+    "subheading": "This helps us personalize your learning journey",
+    "types": {
+      "beginner": {
+        "title": "Beginner Farmer",
+        "desc": "I'm new to farming or just starting out"
+      },
+      "pro": {
+        "title": "Pro Farmer",
+        "desc": "I'm an experienced farmer looking to optimize"
+      }
+    },
+    "continue": "Continue"
   }
 }

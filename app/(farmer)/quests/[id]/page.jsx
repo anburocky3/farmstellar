@@ -25,7 +25,7 @@ function QuestContent() {
   useEffect(() => {
     const auth = localStorage.getItem("farmquest_auth");
     if (!auth) {
-      router.push("/welcome");
+      router.push("/login");
       return;
     }
 

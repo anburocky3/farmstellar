@@ -20,32 +20,33 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "@/components/ui/LanguageSelector";
+import Image from "next/image";
 
 export default function LandingPage() {
-  const { t, i18n } = useTranslation();
-  const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslation();
+  // const router = useRouter();
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading] = useState(false);
 
-  const handleGetStarted = () => {
-    if (isAuthenticated) {
-      const auth = JSON.parse(localStorage.getItem("farmquest_auth"));
-      if (auth.userType === "admin") {
-        router.push("/admin/dashboard");
-      } else {
-        router.push("/dashboard");
-      }
-    } else {
-      router.push("/welcome");
-    }
-  };
+  // const handleGetStarted = () => {
+  //   if (isAuthenticated) {
+  //     const auth = JSON.parse(localStorage.getItem("farmquest_auth"));
+  //     if (auth.userType === "admin") {
+  //       router.push("/admin/dashboard");
+  //     } else {
+  //       router.push("/dashboard");
+  //     }
+  //   } else {
+  //     router.push("/login");
+  //   }
+  // };
 
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading...</p>
+          <p className="text-muted-foreground">{t("loading")}</p>
         </div>
       </div>
     );
@@ -64,13 +65,19 @@ export default function LandingPage() {
       <nav className="relative z-10 container mx-auto px-6 py-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-linear-to-br from-primary to-accent rounded-2xl flex items-center justify-center shadow-lg">
-              <Sprout className="w-7 h-7 text-white" />
+            <div className="relative w-16 h-16">
+              <Image
+                src="/logo.png"
+                alt="FarmStellar"
+                fill
+                className="object-cover rounded-lg"
+              />
             </div>
-            <div>
-              <h1 className="text-2xl font-bold bg-linear-to-r from-primary to-accent bg-clip-text text-transparent">
+            <div className="font-sans!">
+              <h1 className="text-2xl font-bold bg-linear-to-r from-primary to-accent bg-clip-text text-transparent ">
                 FarmStellar
               </h1>
+
               <p className="text-xs text-muted-foreground">
                 Grow Your Knowledge
               </p>
@@ -79,8 +86,8 @@ export default function LandingPage() {
 
           <div className="flex gap-3 items-center">
             <a
-              href="/welcome"
-              className="btn-primary inline-flex items-center px-4 py-2 rounded-md"
+              href="/login"
+              className="btn-primary items-center px-4 py-2 rounded-md hidden md:inline-flex"
             >
               {t("nav.signIn")}
               <ArrowRight className="ml-2 w-4 h-4" />
@@ -93,7 +100,7 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative z-10 container mx-auto px-6 pt-20 pb-32">
+      <section className="relative z-10 container mx-auto px-6 py-10 md:pt-20 md:pb-32">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
@@ -104,18 +111,18 @@ export default function LandingPage() {
               </div>
 
               <div className="space-y-4">
-                <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
+                <h1 className="text-5xl sm:text-5xl md:text-3xl font-bold leading-tight">
                   {t("hero.title")}
                 </h1>
-                <p className="text-xl text-muted-foreground leading-relaxed">
+                <p className="sm:text-xl text-muted-foreground leading-relaxed">
                   {t("hero.subtitle")}
                 </p>
               </div>
 
               <div className="flex flex-wrap gap-4">
                 <a
-                  href="/welcome"
-                  className="btn-primary inline-flex items-center text-lg px-8 py-6 shadow-xl hover:shadow-2xl rounded-md"
+                  href="/login"
+                  className="btn-primary inline-flex items-center sm:text-lg sm:px-8 sm:py-6 shadow-xl hover:shadow-2xl rounded-md"
                 >
                   {t("hero.startJourney")}
                   <ArrowRight className="ml-2 w-5 h-5" />
@@ -127,30 +134,30 @@ export default function LandingPage() {
                       .getElementById("features")
                       .scrollIntoView({ behavior: "smooth" })
                   }
-                  className="border-2 text-lg px-8 py-6 rounded-md"
+                  className="border-2 sm:text-lg px-4 py-2 sm:px-8 sm:py-6 rounded-md"
                 >
                   {t("hero.learnMore")}
                 </button>
               </div>
 
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-6 pt-8">
+              <div className="grid grid-cols-3 gap-6 pt-6">
                 <div className="space-y-1">
                   <div className="text-3xl font-bold text-primary">10K+</div>
                   <div className="text-sm text-muted-foreground">
-                    Active Farmers
+                    {t("stats.activeFarmers")}
                   </div>
                 </div>
                 <div className="space-y-1">
                   <div className="text-3xl font-bold text-accent">50+</div>
                   <div className="text-sm text-muted-foreground">
-                    Learning Quests
+                    {t("stats.learningQuests")}
                   </div>
                 </div>
                 <div className="space-y-1">
                   <div className="text-3xl font-bold text-secondary">95%</div>
                   <div className="text-sm text-muted-foreground">
-                    Success Rate
+                    {t("stats.successRate")}
                   </div>
                 </div>
               </div>
@@ -194,16 +201,16 @@ export default function LandingPage() {
       {/* Features Section */}
       <section
         id="features"
-        className="relative z-10 bg-card/50 backdrop-blur-sm py-24"
+        className="relative z-10 bg-card/50 backdrop-blur-sm oy-10 md:py-24"
       >
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4">
-                Why Choose FarmStellar?
+              <h2 className="text-2xl sm:text-4xl font-bold mb-4">
+                {t("features.heading")}
               </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Experience a revolutionary approach to agricultural education
+              <p className="sm:text-xl text-muted-foreground max-w-2xl mx-auto">
+                {t("features.subheading")}
               </p>
             </div>
 
@@ -213,10 +220,11 @@ export default function LandingPage() {
                 <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all">
                   <BookOpen className="w-7 h-7 text-primary group-hover:text-white transition-colors" />
                 </div>
-                <h3 className="text-2xl font-bold mb-3">Interactive Quests</h3>
+                <h3 className="text-2xl font-bold mb-3">
+                  {t("features.feature1.title")}
+                </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Learn through engaging, story-driven quests that make
-                  agricultural education fun and memorable.
+                  {t("features.feature1.desc")}
                 </p>
               </div>
 
@@ -225,10 +233,11 @@ export default function LandingPage() {
                 <div className="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-accent group-hover:scale-110 transition-all">
                   <Trophy className="w-7 h-7 text-accent group-hover:text-accent-foreground transition-colors" />
                 </div>
-                <h3 className="text-2xl font-bold mb-3">Earn Rewards</h3>
+                <h3 className="text-2xl font-bold mb-3">
+                  {t("features.feature2.title")}
+                </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Complete quests to earn points, badges, and unlock advanced
-                  farming techniques.
+                  {t("features.feature2.desc")}
                 </p>
               </div>
 
@@ -237,10 +246,11 @@ export default function LandingPage() {
                 <div className="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-secondary group-hover:scale-110 transition-all">
                   <Users className="w-7 h-7 text-secondary group-hover:text-white transition-colors" />
                 </div>
-                <h3 className="text-2xl font-bold mb-3">Community Learning</h3>
+                <h3 className="text-2xl font-bold mb-3">
+                  {t("features.feature3.title")}
+                </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Connect with fellow farmers, share experiences, and grow
-                  together as a community.
+                  {t("features.feature3.desc")}
                 </p>
               </div>
 
@@ -249,10 +259,11 @@ export default function LandingPage() {
                 <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all">
                   <TrendingUp className="w-7 h-7 text-primary group-hover:text-white transition-colors" />
                 </div>
-                <h3 className="text-2xl font-bold mb-3">Track Progress</h3>
+                <h3 className="text-2xl font-bold mb-3">
+                  {t("features.feature4.title")}
+                </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Monitor your learning journey with detailed analytics and
-                  personalized insights.
+                  {t("features.feature4.desc")}
                 </p>
               </div>
 
@@ -261,10 +272,11 @@ export default function LandingPage() {
                 <div className="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-accent group-hover:scale-110 transition-all">
                   <Award className="w-7 h-7 text-accent group-hover:text-accent-foreground transition-colors" />
                 </div>
-                <h3 className="text-2xl font-bold mb-3">Certifications</h3>
+                <h3 className="text-2xl font-bold mb-3">
+                  {t("features.feature5.title")}
+                </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Earn recognized certifications as you master sustainable
-                  farming practices.
+                  {t("features.feature5.desc")}
                 </p>
               </div>
 
@@ -274,11 +286,10 @@ export default function LandingPage() {
                   <Globe className="w-7 h-7 text-secondary group-hover:text-white transition-colors" />
                 </div>
                 <h3 className="text-2xl font-bold mb-3">
-                  Multilingual Support
+                  {t("features.feature6.title")}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Learn in your preferred language with support for multiple
-                  regional languages.
+                  {t("features.feature6.desc")}
                 </p>
               </div>
             </div>
@@ -300,18 +311,17 @@ export default function LandingPage() {
 
               <div className="relative z-10 space-y-6">
                 <h2 className="text-4xl md:text-5xl font-bold text-white">
-                  Ready to Transform Your Farming?
+                  {t("cta.title")}
                 </h2>
                 <p className="text-xl text-white/90 max-w-2xl mx-auto">
-                  Join FarmStellar today and start your journey towards
-                  sustainable, profitable farming.
+                  {t("cta.subtitle")}
                 </p>
                 <div className="pt-4">
                   <a
-                    href="/welcome"
+                    href="/login"
                     className="bg-white text-primary hover:bg-white/90 text-lg px-10 py-7 shadow-xl hover:shadow-2xl hover:scale-105 transition-all inline-flex items-center rounded-md"
                   >
-                    {t("hero.startLearningNow")}
+                    {t("cta.button")}
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </a>
                 </div>
@@ -340,10 +350,10 @@ export default function LandingPage() {
 
               <div className="text-center md:text-right">
                 <p className="text-sm text-muted-foreground">
-                  © 2025 FarmStellar. All rights reserved.
+                  {t("footer.copyright")}
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Empowering farmers through gamified learning
+                  {t("footer.mission")}
                 </p>
               </div>
             </div>

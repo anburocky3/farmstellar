@@ -5,10 +5,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useRef, useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { ArrowBigLeft, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 export default function VerifyOTP({ phone, onOTPVerify, changeMobileNo }) {
+  const { t } = useTranslation();
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isVerifying, setIsVerifying] = useState(false);
   const [resendTimer, setResendTimer] = useState(30);
@@ -23,8 +25,6 @@ export default function VerifyOTP({ phone, onOTPVerify, changeMobileNo }) {
 
   useEffect(() => {
     if (otp.every((digit) => digit !== "") && !isVerifying) {
-      console.log("[v0] All OTP digits filled - auto-submitting");
-
       onOTPVerify(phone);
     }
   }, [otp, isVerifying, onOTPVerify, phone]);
@@ -66,7 +66,7 @@ export default function VerifyOTP({ phone, onOTPVerify, changeMobileNo }) {
       <ArrowLeft
         className="absolute top-4 left-4 icon-lg text-muted-foreground cursor-pointer"
         onClick={changeMobileNo}
-        title="Change Mobile number"
+        title={t("verify.changeMobileTitle")}
       />
       <div className="text-center mb-8">
         <div className="w-16 h-16 bg-accent/10 rounded-full mx-auto mb-4 flex items-center justify-center">
@@ -84,9 +84,11 @@ export default function VerifyOTP({ phone, onOTPVerify, changeMobileNo }) {
             />
           </svg>
         </div>
-        <h2 className="text-2xl font-bold text-foreground mb-2">Verify OTP</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-2">
+          {t("verify.title")}
+        </h2>
         <p className="text-sm text-muted-foreground">
-          Enter the 6-digit code sent to
+          {t("verify.instructions")}
           <br />
           <span className="font-semibold text-foreground">+91 {phone}</span>
         </p>
@@ -115,13 +117,13 @@ export default function VerifyOTP({ phone, onOTPVerify, changeMobileNo }) {
           className="w-full"
           disabled={otp.some((digit) => !digit) || isVerifying}
         >
-          {isVerifying ? "Verifying..." : "Verify OTP"}
+          {isVerifying ? t("verify.verifying") : t("verify.verifyButton")}
         </Button>
 
         <div className="text-center">
           {resendTimer > 0 ? (
             <p className="text-sm text-muted-foreground">
-              Resend OTP in {resendTimer}s
+              {t("verify.resendIn", { seconds: resendTimer })}
             </p>
           ) : (
             <button
@@ -129,7 +131,7 @@ export default function VerifyOTP({ phone, onOTPVerify, changeMobileNo }) {
               onClick={handleResend}
               className="text-sm text-primary hover:underline font-medium"
             >
-              Resend OTP
+              {t("verify.resendButton")}
             </button>
           )}
         </div>
@@ -140,7 +142,7 @@ export default function VerifyOTP({ phone, onOTPVerify, changeMobileNo }) {
             onClick={changeMobileNo}
             className="text-medium text-shadow-green-800  text-center"
           >
-            Change Phone Number
+            {t("verify.changePhone")}
           </button>
         </div>
       </form>

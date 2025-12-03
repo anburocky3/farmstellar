@@ -1,6 +1,11 @@
 1. Farmers dont have good internet, it will run in just few kb data
 2. Multi-Lingual - Based on the geography it will detect the local speaking languages and keep the default language. Also it loads appriopate font for example if user selects Hindi, it will load Devanagiri font from google, thus making this more UX friendly.
 
+### Future Enchancements
+
+1. Hiring other farmers for his task
+2. Putting his land for lease.
+
 ### USP:
 
 #### Smart and Real-time Practical Scoring
