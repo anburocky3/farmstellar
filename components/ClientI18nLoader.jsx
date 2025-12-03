@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import i18n from "../app/i18n";
 import { loadFontForCode } from "../lib/font";
+import { Languages } from "lucide-react";
 
 export default function ClientI18nLoader() {
   const [showToast, setShowToast] = useState(false);
@@ -169,16 +170,16 @@ export default function ClientI18nLoader() {
             mr: "मराठी",
           };
           const langLabel = langNames[chosen] || chosen;
-          const sourceKey =
-            detectionSource === "geo" ? "i18n.source_geo" : "i18n.source_nav";
+          // const sourceKey =
+          //   detectionSource === "geo" ? "i18n.source_geo" : "i18n.source_nav";
           const message = i18n.t("i18n.detected_auto", {
             lang: langLabel,
-            source: i18n.t(sourceKey),
+            source: i18n.t(i18n.source_geo),
           });
           setToastMessage(message);
           setShowToast(true);
           // Hide after 5s
-          toastTimer = setTimeout(() => setShowToast(false), 5000);
+          toastTimer = setTimeout(() => setShowToast(false), 50000);
         }
       } catch (e) {}
     }
@@ -197,10 +198,10 @@ export default function ClientI18nLoader() {
   return (
     <>
       {showToast && (
-        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 animate-slide-down">
-          <div className="bg-accent text-accent-foreground px-4 py-3 rounded-2xl shadow-2xl border-2 border-accent/30 flex items-center gap-3 max-w-3xl">
+        <div className="fixed mx-4 bottom-4  right-4  z-50 animate-slide-down">
+          <div className="bg-accent text-accent-foreground px-4 py-3 rounded-2xl shadow-2xl border-2 border-accent/30 flex flex-col items-center gap-3 max-w-3xl">
             <div className="text-sm">{toastMessage}</div>
-            <div className="ml-2 flex items-center gap-2">
+            <div className="sm:ml-2 flex items-center space-x-4 gap-2">
               <button
                 className="text-sm underline"
                 onClick={() => {
@@ -212,14 +213,14 @@ export default function ClientI18nLoader() {
                   }
                 }}
               >
-                {i18n.t("i18n.open_settings")}
+                Settings
               </button>
               <button
                 aria-label={i18n.t("i18n.dismiss")}
                 className="text-sm opacity-80"
                 onClick={() => setShowToast(false)}
               >
-                {i18n.t("i18n.dismiss")}
+                Dismiss
               </button>
             </div>
           </div>
