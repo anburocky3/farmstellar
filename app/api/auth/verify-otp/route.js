@@ -1,7 +1,7 @@
 import connectDb from "@/lib/db";
 import Otp from "@/lib/models/Otp.js";
 import User from "@/lib/models/User.js";
-import { verifyOTPService } from "@/server/services/twilioService.js";
+import { verifyOTPService } from "@/services/twilioService.js";
 import jwt from "jsonwebtoken";
 
 function getJwtSecret() {

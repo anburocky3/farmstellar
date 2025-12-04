@@ -1,13 +1,5 @@
 import jwt from "jsonwebtoken";
-
-function getJwtSecret() {
-  const secret = process.env.JWT_SECRET;
-  if (!secret) {
-    if (process.env.NODE_ENV === "development") return "dev_jwt_secret";
-    throw new Error("JWT secret not configured");
-  }
-  return secret;
-}
+import { getJwtSecret } from "@/lib/serverAuth";
 
 export async function POST(req) {
   try {

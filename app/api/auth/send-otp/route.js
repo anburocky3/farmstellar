@@ -1,6 +1,6 @@
 import connectDb from "@/lib/db";
 import Otp from "@/lib/models/Otp.js";
-import { sendOTPService } from "@/server/services/twilioService.js";
+import { sendOTPService } from "@/services/twilioService.js";
 
 const DEFAULT_OTP_TTL_MS = 5 * 60 * 1000;
 

@@ -2,7 +2,7 @@ import connectDb from "@/lib/db";
 import Submission from "@/lib/models/Submission.js";
 import User from "@/lib/models/User.js";
 import { getUserIdFromRequest } from "@/lib/serverAuth.js";
-import s3Service from "@/server/services/s3Service.js";
+import s3Service from "@/services/s3Service.js";
 
 // XP rewards mapping (same as server one)
 const QUEST_XP_REWARDS = {
