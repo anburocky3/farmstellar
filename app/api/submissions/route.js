@@ -2,7 +2,7 @@ import connectDb from "@/lib/db";
 import Submission from "@/lib/models/Submission.js";
 import User from "@/lib/models/User.js";
 import { getUserIdFromRequest } from "@/lib/serverAuth.js";
-import s3Service from "@/lib/services/s3Service.js";
+import { headObject } from "@/lib/services/s3Service.js";
 
 // XP rewards mapping (same as server one)
 const QUEST_XP_REWARDS = {
@@ -52,7 +52,7 @@ export async function POST(req) {
     if (media && media.length > 0) {
       for (const m of media) {
         try {
-          await s3Service.headObject(m.key);
+          await headObject(m.key);
         } catch (error) {
           return new Response(
             JSON.stringify({ message: "File not found in S3 storage." }),
