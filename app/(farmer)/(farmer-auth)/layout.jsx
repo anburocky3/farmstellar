@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { isAuthenticated, getStoredToken, logout } from "@/lib/auth";
+import { toast } from "react-hot-toast";
 import NavigationMenu from "@/components/common/navigation-menu";
 import { UserProvider } from "@/lib/userContext";
 
@@ -23,6 +24,12 @@ export default function FarmerAuthLayout({ children }) {
       // Call the comprehensive logout utility
       // This clears localStorage and calls server logout endpoint
       await logout(true);
+      // Notify user
+      try {
+        toast.success("Logged out successfully");
+      } catch (e) {
+        /* ignore toast errors */
+      }
       // Redirect to login
       router.push("/login");
     } catch (err) {
