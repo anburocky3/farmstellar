@@ -11,11 +11,13 @@ import {
   CloudDrizzle,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function WeatherAlertCard({ location }) {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -134,9 +136,11 @@ export function WeatherAlertCard({ location }) {
         <div className="flex items-center gap-3 text-destructive">
           <AlertTriangle className="w-6 h-6" />
           <div>
-            <h3 className="text-lg font-bold">Weather Data Unavailable</h3>
+            <h3 className="text-lg font-bold">
+              {t("dashboard.weather.unavailable")}
+            </h3>
             <p className="text-sm text-muted-foreground mt-1">
-              {error || "Unable to fetch weather data"}
+              {error || t("dashboard.weather.unableToFetch")}
             </p>
           </div>
         </div>
@@ -149,7 +153,7 @@ export function WeatherAlertCard({ location }) {
       <div className="flex items-start justify-between mb-4">
         <div>
           <h3 className="text-xl font-bold text-foreground mb-1">
-            Weather Alert
+            {t("dashboard.weather.title")}
           </h3>
           <p className="text-xs text-muted-foreground">{location}</p>
         </div>
@@ -173,21 +177,27 @@ export function WeatherAlertCard({ location }) {
       <div className="grid grid-cols-3 gap-3 mb-4">
         <div className="bg-muted/30 rounded-xl p-3 text-center">
           <Droplets className="w-4 h-4 text-primary mx-auto mb-1" />
-          <p className="text-xs text-muted-foreground">Humidity</p>
+          <p className="text-xs text-muted-foreground">
+            {t("dashboard.weather.humidity")}
+          </p>
           <p className="text-sm font-bold text-foreground">
             {weatherData.humidity}%
           </p>
         </div>
         <div className="bg-muted/30 rounded-xl p-3 text-center">
           <CloudRain className="w-4 h-4 text-accent mx-auto mb-1" />
-          <p className="text-xs text-muted-foreground">Rain</p>
+          <p className="text-xs text-muted-foreground">
+            {t("dashboard.weather.rain")}
+          </p>
           <p className="text-sm font-bold text-foreground">
             {weatherData.rainfall}%
           </p>
         </div>
         <div className="bg-muted/30 rounded-xl p-3 text-center">
           <Wind className="w-4 h-4 text-secondary mx-auto mb-1" />
-          <p className="text-xs text-muted-foreground">Wind</p>
+          <p className="text-xs text-muted-foreground">
+            {t("dashboard.weather.wind")}
+          </p>
           <p className="text-sm font-bold text-foreground">
             {weatherData.windSpeed} km/h
           </p>
@@ -199,7 +209,7 @@ export function WeatherAlertCard({ location }) {
         <AlertTriangle className="w-5 h-5 text-accent shrink-0 mt-0.5" />
         <div>
           <p className="text-xs font-semibold text-accent-foreground mb-1">
-            Quick Alert
+            {t("dashboard.weather.quickAlert")}
           </p>
           <p className="text-xs text-muted-foreground">{weatherData.alert}</p>
         </div>

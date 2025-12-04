@@ -68,13 +68,13 @@ export default function RevampedQuestsListScreen({
   return (
     <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/20 pb-20">
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-primary/5 pb-12 pt-8 md:pt-12">
+      <div className="relative overflow-hidden bg-linear-to-br from-green-100 via-green-200 to-green-500 pb-12 pt-8 md:pt-12">
         <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-accent/20 rounded-full blur-3xl opacity-50"></div>
         <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-64 h-64 bg-primary/20 rounded-full blur-3xl opacity-50"></div>
 
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center mb-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent-foreground text-sm font-medium mb-4 border border-accent/20">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500 text-accent-foreground text-sm font-medium mb-4 border border-accent/20">
               <SparklesIcon className="w-4 h-4" />
               <span>New Quests Available</span>
             </div>
@@ -155,7 +155,7 @@ export default function RevampedQuestsListScreen({
               <input
                 type="text"
                 placeholder="Search quests..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-input bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />

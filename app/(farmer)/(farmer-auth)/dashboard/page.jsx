@@ -3,15 +3,20 @@
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import LeaderboardCard from "@/components/app/leaderboard-card";
+import Chatbot from "@/components/app/farmstellar-chatbot";
 import { UserProgressCard } from "@/components/app/user-progress-card";
 import { WeatherAlertCard } from "@/components/app/weather-alert-card";
 import { OngoingQuestsCard } from "@/components/app/ongoing-quests-card";
 import { getGreeting } from "@/lib/utils";
 import { useUser } from "@/lib/userContext";
 import Image from "next/image";
+import LanguageSelector from "@/components/ui/LanguageSelector";
+import { useTranslation } from "react-i18next";
 
 export default function FarmerDashboard({ onStartQuest }) {
   const userData = useUser();
+  const { t } = useTranslation();
+
   useEffect(() => {
     const name = userData?.name;
     if (!name) return;
@@ -30,14 +35,16 @@ export default function FarmerDashboard({ onStartQuest }) {
         </span>
         <div>
           <div className="font-bold">
-            Welcome, {userData?.name || "Farmer"}!
+            {t("dashboard.welcome", { name: userData?.name || "Farmer" })}
           </div>
-          <div className="text-xs text-muted-foreground">Happy farming 🌱</div>
+          <div className="text-xs text-muted-foreground">
+            {t("dashboard.happyFarming")}
+          </div>
         </div>
       </div>,
       { duration: 4500 }
     );
-  }, [userData?.name]);
+  }, [userData?.name, t]);
   const handleResumeQuest = (questId) => {
     if (onStartQuest) {
       onStartQuest(questId);
@@ -46,9 +53,11 @@ export default function FarmerDashboard({ onStartQuest }) {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/20">
+      {/* FarmStellar Chatbot */}
+      <Chatbot />
       {/* Header */}
       <div className="bg-card/80 backdrop-blur-lg border-b border-border shadow-sm">
-        <div className="container mx-auto px-4 sm:px-6 py-6">
+        <div className="container mx-auto px-4 sm:px-6 py-6 flex justify-between items-center">
           <div className="flex justify-start items-center gap-3 ml-14 sm:ml-16">
             {/* <div className="w-10 h-10 bg-linear-to-br from-primary to-accent rounded-xl flex items-center justify-center">
               <Sparkles className="w-6 h-6 text-white" />
@@ -64,13 +73,19 @@ export default function FarmerDashboard({ onStartQuest }) {
               <div className="flex items-center gap-2">
                 {/* <Sun className="w-4 h-4 text-accent" /> */}
                 <h1 className="text-lg sm:text-xl font-bold text-foreground">
-                  {getGreeting()}, {userData?.name || "Farmer"}!
+                  {t("dashboard.greeting", {
+                    greeting: getGreeting(),
+                    name: userData?.name || "Farmer",
+                  })}
                 </h1>
               </div>
               <p className="text-xs text-muted-foreground">
-                Ready to grow your knowledge today? 🌱
+                {t("dashboard.readyToGrow")}
               </p>
             </div>
+          </div>
+          <div className="hidden sm:block">
+            <LanguageSelector />
           </div>
         </div>
       </div>
@@ -104,7 +119,7 @@ export default function FarmerDashboard({ onStartQuest }) {
         {/* Quick Stats Section */}
         <div className="mt-8 bg-card border-2 border-border rounded-3xl p-6 shadow-lg">
           <h3 className="text-xl font-bold text-foreground mb-6">
-            Your Achievements
+            {t("dashboard.achievements")}
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <div className="text-center p-4 bg-linear-to-br from-primary/10 to-transparent rounded-2xl border border-primary/20 hover:scale-105 transition-transform">
@@ -113,17 +128,23 @@ export default function FarmerDashboard({ onStartQuest }) {
                   (q) => q.status === "completed"
                 )?.length || 0}
               </p>
-              <p className="text-xs text-muted-foreground">Quests Completed</p>
+              <p className="text-xs text-muted-foreground">
+                {t("dashboard.questsCompleted")}
+              </p>
             </div>
             <div className="text-center p-4 bg-linear-to-br from-accent/10 to-transparent rounded-2xl border border-accent/20 hover:scale-105 transition-transform">
               <p className="text-3xl font-bold text-accent mb-1">
                 {userData?.badges?.length || 0}
               </p>
-              <p className="text-xs text-muted-foreground">Badges Earned</p>
+              <p className="text-xs text-muted-foreground">
+                {t("dashboard.badgesEarned")}
+              </p>
             </div>
             <div className="text-center p-4 bg-linear-to-br from-primary/10 to-transparent rounded-2xl border border-primary/20 hover:scale-105 transition-transform">
               <p className="text-3xl font-bold text-primary mb-1">92%</p>
-              <p className="text-xs text-muted-foreground">Success Rate</p>
+              <p className="text-xs text-muted-foreground">
+                {t("dashboard.successRate")}
+              </p>
             </div>
           </div>
         </div>

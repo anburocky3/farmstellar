@@ -191,5 +191,48 @@
         "savedLocally": "Saved locally. Will sync when online."
       }
     }
+  },
+  "dashboard": {
+    "welcome": "Welcome, {{name}}!",
+    "happyFarming": "Happy farming 🌱",
+    "greeting": "{{greeting}}, {{name}}!",
+    "readyToGrow": "Ready to grow your knowledge today? 🌱",
+    "achievements": "Your Achievements",
+    "questsCompleted": "Quests Completed",
+    "badgesEarned": "Badges Earned",
+    "successRate": "Success Rate",
+    "ongoingQuests": {
+      "title": "Ongoing Quests",
+      "subtitle": "Continue your learning journey",
+      "tasksCompleted": "{{completed}} of {{total}} tasks completed",
+      "tasksRemaining": "{{count}} tasks remaining",
+      "resume": "Resume",
+      "noQuests": "No ongoing quests",
+      "startNew": "Start a new quest to begin learning!"
+    },
+    "weather": {
+      "title": "Weather Alert",
+      "humidity": "Humidity",
+      "rain": "Rain",
+      "wind": "Wind",
+      "quickAlert": "Quick Alert",
+      "unavailable": "Weather Data Unavailable",
+      "unableToFetch": "Unable to fetch weather data"
+    },
+    "userProgress": {
+      "nextMilestone": "Next Milestone",
+      "xpProgress": "XP Progress",
+      "toNextLevel": "{{percent}}% to next level",
+      "totalXp": "Total XP",
+      "level": "Level",
+      "quests": "Quests"
+    },
+    "leaderboard": {
+      "title": "Leaderboard",
+      "subtitle": "Top Farmers This Month",
+      "you": "You",
+      "climbRanks": "Keep learning to climb the ranks! 🚀",
+      "noData": "No leaderboard data available"
+    }
   }
 }

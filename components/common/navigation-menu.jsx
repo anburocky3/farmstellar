@@ -40,12 +40,12 @@ export function NavigationMenu({
 
   const NAVIGATION_MENU_ITEMS = [
     { icon: Home, label: "Dashboard", screenId: "/dashboard" },
-    { icon: Leaf, label: "Quests", screenId: "quests-list" },
-    { icon: Users, label: "Community", screenId: "community" },
-    { icon: Gift, label: "Rewards", screenId: "rewards" },
-    { icon: User, label: "Profile", screenId: "farmer-profile" },
-    { icon: Settings, label: "Settings", screenId: "settings" },
-    { icon: HelpCircle, label: "Help", screenId: "farmer-dashboard" },
+    { icon: Leaf, label: "Quests", screenId: "/quests" },
+    { icon: Users, label: "Community", screenId: "/community" },
+    { icon: Gift, label: "Rewards", screenId: "/rewards" },
+    { icon: User, label: "Profile", screenId: "/farmer-profile" },
+    { icon: Settings, label: "Settings", screenId: "/settings" },
+    { icon: HelpCircle, label: "Help", screenId: "/help" },
   ];
 
   const pathname = usePathname();
@@ -58,8 +58,9 @@ export function NavigationMenu({
     if (p.startsWith("/community")) return "community";
     if (p.startsWith("/rewards")) return "rewards";
     if (p.startsWith("/profile") || p.startsWith("/farmer/profile"))
-      return "farmer-profile";
-    if (p.startsWith("/settings")) return "settings";
+      return "/farmer-profile";
+    if (p.startsWith("/settings")) return "/settings";
+    if (p.startsWith("/help")) return "/help";
     return null;
   };
 
@@ -151,7 +152,9 @@ export function NavigationMenu({
                 </div>
                 <div className="flex items-center gap-1 mt-1 bg-green-500 px-2 py-0.5 rounded-full text-white text-xs">
                   <LucideTrophy className="w-3 h-3" />
-                  <span className="text-small font-semibold">1500 XP</span>
+                  <span className="text-small font-semibold">
+                    {userData?.xp} XP
+                  </span>
                 </div>
               </div>
             </div>

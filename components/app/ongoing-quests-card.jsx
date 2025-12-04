@@ -3,10 +3,12 @@
 import { Leaf, ArrowRight, CheckCircle2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getStoredToken } from "@/lib/auth";
+import { useTranslation } from "react-i18next";
 
 export function OngoingQuestsCard({ onResumeQuest }) {
   const [ongoingQuests, setOngoingQuests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchOngoingQuests = async () => {
@@ -99,9 +101,11 @@ export function OngoingQuestsCard({ onResumeQuest }) {
           <Leaf className="w-6 h-6 text-primary" />
         </div>
         <div>
-          <h3 className="text-xl font-bold text-foreground">Ongoing Quests</h3>
+          <h3 className="text-xl font-bold text-foreground">
+            {t("dashboard.ongoingQuests.title")}
+          </h3>
           <p className="text-xs text-muted-foreground">
-            Continue your learning journey
+            {t("dashboard.ongoingQuests.subtitle")}
           </p>
         </div>
       </div>
@@ -120,7 +124,10 @@ export function OngoingQuestsCard({ onResumeQuest }) {
                   {quest.name}
                 </h4>
                 <p className="text-xs text-muted-foreground">
-                  {quest.completedTasks} of {quest.totalTasks} tasks completed
+                  {t("dashboard.ongoingQuests.tasksCompleted", {
+                    completed: quest.completedTasks,
+                    total: quest.totalTasks,
+                  })}
                 </p>
               </div>
               <span className="text-xs font-bold text-accent">
@@ -140,13 +147,17 @@ export function OngoingQuestsCard({ onResumeQuest }) {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <CheckCircle2 className="w-3 h-3" />
-                <span>{quest.remainingTasks} tasks remaining</span>
+                <span>
+                  {t("dashboard.ongoingQuests.tasksRemaining", {
+                    count: quest.remainingTasks,
+                  })}
+                </span>
               </div>
               <button
                 onClick={() => onResumeQuest && onResumeQuest(quest.id)}
                 className="flex items-center gap-1 text-xs font-semibold text-primary hover:text-accent transition-colors group-hover:gap-2"
               >
-                Resume
+                {t("dashboard.ongoingQuests.resume")}
                 <ArrowRight className="w-3 h-3" />
               </button>
             </div>
@@ -156,9 +167,11 @@ export function OngoingQuestsCard({ onResumeQuest }) {
 
       {ongoingQuests.length === 0 && (
         <div className="text-center py-8">
-          <p className="text-sm text-muted-foreground">No ongoing quests</p>
+          <p className="text-sm text-muted-foreground">
+            {t("dashboard.ongoingQuests.noQuests")}
+          </p>
           <p className="text-xs text-muted-foreground mt-1">
-            Start a new quest to begin learning!
+            {t("dashboard.ongoingQuests.startNew")}
           </p>
         </div>
       )}

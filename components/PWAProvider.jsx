@@ -16,6 +16,15 @@ export default function PWAProvider() {
       try {
         e.preventDefault();
       } catch (err) {}
+
+      // Check if user dismissed previously
+      try {
+        if (localStorage.getItem("farmstellar_pwa_dismissed") === "1") {
+          // user dismissed previously, do not re-show
+          return;
+        }
+      } catch (e) {}
+
       setDeferredPrompt(e);
       // Show custom install banner after a short delay. Use a shorter delay on mobile.
       const mobileDelay = 3000; // 3s on mobile for better UX
@@ -23,20 +32,6 @@ export default function PWAProvider() {
       const delay = /Mobi|Android/i.test(navigator.userAgent)
         ? mobileDelay
         : desktopDelay;
-      // Respect a previous desktop dismiss choice
-      try {
-        const uaLocal = navigator.userAgent || "";
-        const isIosLocal = /iphone|ipad|ipod/i.test(uaLocal);
-        const isMobileLocal = /Mobi|Android/i.test(uaLocal) || isIosLocal;
-        const isDesktopLocal = !isMobileLocal;
-        if (
-          isDesktopLocal &&
-          localStorage.getItem("farmstellar_pwa_dismissed") === "1"
-        ) {
-          // user dismissed on desktop previously, do not re-show
-          return;
-        }
-      } catch (e) {}
 
       timer = setTimeout(() => setShowBanner(true), delay);
     }
@@ -60,6 +55,13 @@ export default function PWAProvider() {
           window.matchMedia("(display-mode: standalone)").matches) ||
         window.navigator.standalone === true;
       if (/iphone|ipad|ipod/i.test(ua) && !isStandalone) {
+        // Check if user dismissed previously
+        try {
+          if (localStorage.getItem("farmstellar_pwa_dismissed") === "1") {
+            // user dismissed previously, do not re-show
+            return;
+          }
+        } catch (e) {}
         // show iOS install hint after 3s
         timer = setTimeout(() => setShowBanner(true), 3000);
       }
@@ -150,16 +152,10 @@ export default function PWAProvider() {
       // for example a landing CTA may set localStorage.setItem('farmstellar_prompt', '1')
       const val = localStorage.getItem("farmstellar_prompt");
       if (val === "1") {
+        // Check if user dismissed previously
         try {
-          const uaLocal = navigator.userAgent || "";
-          const isIosLocal = /iphone|ipad|ipod/i.test(uaLocal);
-          const isMobileLocal = /Mobi|Android/i.test(uaLocal) || isIosLocal;
-          const isDesktopLocal = !isMobileLocal;
-          if (
-            isDesktopLocal &&
-            localStorage.getItem("farmstellar_pwa_dismissed") === "1"
-          ) {
-            // respect desktop dismissal
+          if (localStorage.getItem("farmstellar_pwa_dismissed") === "1") {
+            // respect previous dismissal
             return;
           }
         } catch (e) {}
@@ -217,15 +213,8 @@ export default function PWAProvider() {
             <button
               onClick={() => {
                 try {
-                  const uaLocal = navigator.userAgent || "";
-                  const isIosLocal = /iphone|ipad|ipod/i.test(uaLocal);
-                  const isMobileLocal =
-                    /Mobi|Android/i.test(uaLocal) || isIosLocal;
-                  const isDesktopLocal = !isMobileLocal;
-                  if (isDesktopLocal) {
-                    // remember desktop dismiss so we don't nag the user repeatedly
-                    localStorage.setItem("farmstellar_pwa_dismissed", "1");
-                  }
+                  // Remember dismiss for all devices so we don't nag repeatedly
+                  localStorage.setItem("farmstellar_pwa_dismissed", "1");
                 } catch (e) {}
                 setShowBanner(false);
               }}

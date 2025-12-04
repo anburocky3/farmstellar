@@ -3,12 +3,14 @@
 import { Trophy, Award, Medal, Crown } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getStoredToken } from "@/lib/auth";
+import { useTranslation } from "react-i18next";
 
 export default function LeaderboardCard() {
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentUserId, setCurrentUserId] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchLeaderboard = async () => {
@@ -94,14 +96,16 @@ export default function LeaderboardCard() {
             <Trophy className="w-6 h-6 text-accent" />
           </div>
           <div>
-            <h3 className="text-xl font-bold text-foreground">Leaderboard</h3>
+            <h3 className="text-xl font-bold text-foreground">
+              {t("dashboard.leaderboard.title")}
+            </h3>
             <p className="text-xs text-muted-foreground">
-              Top Farmers This Month
+              {t("dashboard.leaderboard.subtitle")}
             </p>
           </div>
         </div>
         <p className="text-sm text-muted-foreground text-center py-8">
-          {error || "No leaderboard data available"}
+          {error || t("dashboard.leaderboard.noData")}
         </p>
       </div>
     );
@@ -114,9 +118,11 @@ export default function LeaderboardCard() {
           <Trophy className="w-6 h-6 text-accent" />
         </div>
         <div>
-          <h3 className="text-xl font-bold text-foreground">Leaderboard</h3>
+          <h3 className="text-xl font-bold text-foreground">
+            {t("dashboard.leaderboard.title")}
+          </h3>
           <p className="text-xs text-muted-foreground">
-            Top Farmers This Month
+            {t("dashboard.leaderboard.subtitle")}
           </p>
         </div>
       </div>
@@ -163,7 +169,7 @@ export default function LeaderboardCard() {
                   </p>
                   {isCurrentUser && (
                     <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-                      You
+                      {t("dashboard.leaderboard.you")}
                     </span>
                   )}
                 </div>
@@ -185,7 +191,7 @@ export default function LeaderboardCard() {
 
       <div className="mt-4 pt-4 border-t border-border text-center">
         <p className="text-xs text-muted-foreground">
-          Keep learning to climb the ranks! 🚀
+          {t("dashboard.leaderboard.climbRanks")}
         </p>
       </div>
     </div>

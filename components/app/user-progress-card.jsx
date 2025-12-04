@@ -2,8 +2,10 @@
 
 import { Sprout, TrendingUp, User } from "lucide-react";
 import { LevelBadge } from "./level-badge";
+import { useTranslation } from "react-i18next";
 
 export function UserProgressCard({ userData }) {
+  const { t } = useTranslation();
   const xpLevel = userData?.xpLevel || 0;
   const currentXP = userData?.xp || userData?.currentXP || 0;
   const requiredXP = userData?.requiredXP || 100;
@@ -41,7 +43,9 @@ export function UserProgressCard({ userData }) {
           </div>
         </div>
         <div className="text-right">
-          <p className="text-sm text-muted-foreground">Next Milestone</p>
+          <p className="text-sm text-muted-foreground">
+            {t("dashboard.userProgress.nextMilestone")}
+          </p>
           <p className="text-lg font-bold text-accent">-{xpToNextLevel} XP</p>
         </div>
       </div>
@@ -49,7 +53,9 @@ export function UserProgressCard({ userData }) {
       {/* Progress Bar */}
       <div className="space-y-2">
         <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground font-medium">XP Progress</span>
+          <span className="text-muted-foreground font-medium">
+            {t("dashboard.userProgress.xpProgress")}
+          </span>
           <span className="font-bold text-foreground">
             {currentXP} / {requiredXP} XP
           </span>
@@ -64,7 +70,11 @@ export function UserProgressCard({ userData }) {
         </div>
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <TrendingUp className="w-3 h-3" />
-          <span>{progressPercentage.toFixed(1)}% to next level</span>
+          <span>
+            {t("dashboard.userProgress.toNextLevel", {
+              percent: progressPercentage.toFixed(1),
+            })}
+          </span>
         </div>
       </div>
 
@@ -72,17 +82,23 @@ export function UserProgressCard({ userData }) {
       <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-border">
         <div className="text-center">
           <p className="text-2xl font-bold text-primary">{currentXP}</p>
-          <p className="text-xs text-muted-foreground mt-1">Total XP</p>
+          <p className="text-xs text-muted-foreground mt-1">
+            {t("dashboard.userProgress.totalXp")}
+          </p>
         </div>
         <div className="text-center">
           <p className="text-2xl font-bold text-accent">{xpLevel}</p>
-          <p className="text-xs text-muted-foreground mt-1">Level</p>
+          <p className="text-xs text-muted-foreground mt-1">
+            {t("dashboard.userProgress.level")}
+          </p>
         </div>
         <div className="text-center">
           <p className="text-2xl font-bold text-secondary">
             {completedQuestsCount}
           </p>
-          <p className="text-xs text-muted-foreground mt-1">Quests</p>
+          <p className="text-xs text-muted-foreground mt-1">
+            {t("dashboard.userProgress.quests")}
+          </p>
         </div>
       </div>
     </div>

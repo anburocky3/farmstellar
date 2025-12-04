@@ -101,8 +101,8 @@ export default function FarmerAuthLayout({ children }) {
 
   const handleNavigate = (screen) => {
     const routes = {
-      "farmer-dashboard": "/dashboard",
-      "quests-list": "/quests",
+      "/dashboard": "/dashboard",
+      "/quests": "/quests",
       community: "/community",
       rewards: "/rewards",
       "farmer-profile": "/settings/profile",
