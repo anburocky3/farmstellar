@@ -6,7 +6,16 @@
   "nav": {
     "signIn": "Sign In",
     "goToDashboard": "Go to Dashboard",
-    "changeLanguage": "Change Language"
+    "changeLanguage": "Change Language",
+    "dashboard": "Dashboard",
+    "quests": "Quests",
+    "community": "Community",
+    "rewards": "Rewards",
+    "profile": "Profile",
+    "settings": "Settings",
+    "help": "Help",
+    "logout": "Logout",
+    "empoweringSustainable": "Empowering sustainable farming"
   },
   "hero": {
     "badge": "Gamified Learning Platform",
@@ -234,5 +243,22 @@
       "climbRanks": "Keep learning to climb the ranks! 🚀",
       "noData": "No leaderboard data available"
     }
+  },
+  "chatbot": {
+    "greeting": "👋 Namaste! I'm FarmStellar Bot, your farming companion. How can I help you today?",
+    "placeholder": "Ask me anything about farming...",
+    "thinking": "Thinking...",
+    "powered": "Powered by FarmStellar AI 🌾 — tips appear with bullets and bold highlights",
+    "clearChat": "Clear chat history",
+    "online": "Online",
+    "botName": "FarmStellar Bot",
+    "fallback": "I'm here to help! Ask me anything about farming.",
+    "learningFallback": "I'm currently learning! In the meantime, you can ask me about:\n\n🌱 Crop recommendations\n💧 Watering schedules\n🐛 Pest control\n🌾 Soil health\n📚 Quest tips\n\nWhat would you like to know?",
+    "creatorInfo": "I was created by **Kongu Engineering College** by these talented teammates:\n\n• **Bhupesh** - Backend & AI Integration\n• **Rithini** - Frontend & UI/UX Design\n• **Sangeetha** - Product & Agricultural Expertise\n\nTogether, we're empowering farmers through gamified learning! 🌱",
+    "suggestedQueries": "Try asking me:",
+    "suggestCropCare": "How do I care for my crops?",
+    "suggestPestControl": "What are common pests and solutions?",
+    "suggestIrrigation": "When and how much should I water?",
+    "suggestSoil": "How can I improve my soil health?"
   }
 }

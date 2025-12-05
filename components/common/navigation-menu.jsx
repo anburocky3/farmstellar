@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useTranslation } from "react-i18next";
 import {
   Home,
   Leaf,
@@ -26,6 +27,7 @@ export function NavigationMenu({
   userData,
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -39,13 +41,13 @@ export function NavigationMenu({
   }, [isMenuOpen]);
 
   const NAVIGATION_MENU_ITEMS = [
-    { icon: Home, label: "Dashboard", screenId: "/dashboard" },
-    { icon: Leaf, label: "Quests", screenId: "/quests" },
-    { icon: Users, label: "Community", screenId: "/community" },
-    { icon: Gift, label: "Rewards", screenId: "/rewards" },
-    { icon: User, label: "Profile", screenId: "/farmer-profile" },
-    { icon: Settings, label: "Settings", screenId: "/settings" },
-    { icon: HelpCircle, label: "Help", screenId: "/help" },
+    { icon: Home, label: t("nav.dashboard"), screenId: "/dashboard" },
+    { icon: Leaf, label: t("nav.quests"), screenId: "/quests" },
+    { icon: Users, label: t("nav.community"), screenId: "/community" },
+    { icon: Gift, label: t("nav.rewards"), screenId: "/rewards" },
+    { icon: User, label: t("nav.profile"), screenId: "/farmer-profile" },
+    { icon: Settings, label: t("nav.settings"), screenId: "/settings" },
+    { icon: HelpCircle, label: t("nav.help"), screenId: "/help" },
   ];
 
   const pathname = usePathname();
@@ -208,7 +210,7 @@ export function NavigationMenu({
                   <LogOut className="icon-sm text-destructive" />
                 </div>
                 <span className="font-medium text-destructive group-hover:translate-x-0.5 transition-transform">
-                  Logout
+                  {t("nav.logout")}
                 </span>
               </button>
             </div>
@@ -226,7 +228,7 @@ export function NavigationMenu({
               <div className="flex flex-col items-start text-muted-foreground space-y-2">
                 <span className="text-medium">Farmstellar V1</span>
                 <small className="text-xs text-gray-400">
-                  Empowering sustainable farming
+                  {t("nav.empoweringSustainable")}
                 </small>
               </div>
             </div>

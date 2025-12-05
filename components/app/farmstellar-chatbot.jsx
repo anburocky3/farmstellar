@@ -1,24 +1,33 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Loader2, Sparkles, Bot } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import {
+  MessageCircle,
+  X,
+  Send,
+  Loader2,
+  Sparkles,
+  Bot,
+  Trash2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { getStoredToken } from "@/lib/auth";
 
 export default function FarmstellarChatbot() {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
       id: 1,
       role: "assistant",
-      content:
-        "👋 Namaste! I'm FarmStellar Bot, your farming companion. How can I help you today?",
+      content: t("chatbot.greeting"),
       timestamp: new Date(),
     },
   ]);
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [sessionId] = useState(() => `session_${Date.now()}`);
   const scrollAreaRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -51,15 +60,69 @@ export default function FarmstellarChatbot() {
     setIsLoading(true);
 
     try {
-      const token = getStoredToken();
+      // Check if user is asking about creators
+      const lowerInput = inputMessage.toLowerCase();
+      const creatorKeywords = [
+        "who created",
+        "who made",
+        "creator",
+        "team",
+        "developed",
+        "built",
+        "developed by",
+      ];
+      const isAskingAboutCreators = creatorKeywords.some((keyword) =>
+        lowerInput.includes(keyword)
+      );
 
-      const response = await fetch(`/api/chatbot/message`, {
+      if (isAskingAboutCreators) {
+        const botMessage = {
+          id: messages.length + 2,
+          role: "assistant",
+          content: t("chatbot.creatorInfo"),
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, botMessage]);
+        setIsLoading(false);
+        return;
+      }
+
+      // Fetch user profile and farm details
+      let userLocation = null;
+      let farmDetails = null;
+
+      try {
+        const profileRes = await fetch("/api/auth/me");
+        if (profileRes.ok) {
+          const profile = await profileRes.json();
+          userLocation = {
+            city: profile.city,
+            location: profile.location,
+          };
+          if (profile.farm) {
+            farmDetails = {
+              name: profile.farm.name,
+              address: profile.farm.address,
+              size: profile.farm.size,
+              primaryCrop: profile.farm.primaryCrop,
+            };
+          }
+        }
+      } catch (e) {
+        console.warn("Could not fetch user profile:", e);
+      }
+
+      const response = await fetch(`/api/chatbot/ask`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ message: inputMessage }),
+        body: JSON.stringify({
+          message: inputMessage,
+          session_id: sessionId,
+          userLocation,
+          farmDetails,
+        }),
       });
 
       if (!response.ok) {
@@ -71,8 +134,7 @@ export default function FarmstellarChatbot() {
       const botMessage = {
         id: messages.length + 2,
         role: "assistant",
-        content:
-          data.response || "I'm here to help! Ask me anything about farming.",
+        content: data.answer || t("chatbot.fallback"),
         timestamp: new Date(),
       };
 
@@ -84,8 +146,7 @@ export default function FarmstellarChatbot() {
       const fallbackMessage = {
         id: messages.length + 2,
         role: "assistant",
-        content:
-          "I'm currently learning! In the meantime, you can ask me about:\n\n🌱 Crop recommendations\n💧 Watering schedules\n🐛 Pest control\n🌾 Soil health\n📚 Quest tips\n\nWhat would you like to know?",
+        content: t("chatbot.learningFallback"),
         timestamp: new Date(),
       };
 
@@ -107,6 +168,141 @@ export default function FarmstellarChatbot() {
       hour: "2-digit",
       minute: "2-digit",
     });
+  };
+
+  const renderMessageContent = (content) => {
+    if (!content) return "";
+
+    const escapeHtml = (str) =>
+      str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+    // Escape first to avoid accidental HTML, then restore simple markdown
+    let safe = escapeHtml(content);
+
+    // Bold: **text**
+    safe = safe.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+    const lines = safe.split(/\r?\n/).filter((l) => l.trim().length > 0);
+    const bulletRegex = /^([•\-]\s)(.+)$/;
+    const allBullets =
+      lines.length > 0 && lines.every((l) => bulletRegex.test(l));
+
+    if (allBullets) {
+      const items = lines
+        .map((l) => l.replace(bulletRegex, "$2").trim())
+        .map((l) => `<li>${l}</li>`) // keep bold tags inside
+        .join("");
+      return `<ul class="list-disc list-outside pl-4 space-y-1">${items}</ul>`;
+    }
+
+    // Otherwise join with <br>
+    return lines.join("<br/>");
+  };
+
+  const handleClearChat = async () => {
+    try {
+      await fetch(`/api/chatbot/clear`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ session_id: sessionId }),
+      });
+
+      setMessages([
+        {
+          id: 1,
+          role: "assistant",
+          content: t("chatbot.greeting"),
+          timestamp: new Date(),
+        },
+      ]);
+    } catch (error) {
+      console.error("Failed to clear chat:", error);
+    }
+  };
+
+  const suggestedQueries = [
+    t("chatbot.suggestCropCare"),
+    t("chatbot.suggestPestControl"),
+    t("chatbot.suggestIrrigation"),
+    t("chatbot.suggestSoil"),
+  ];
+
+  const handleSuggestionClick = async (suggestion) => {
+    setInputMessage(suggestion);
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    // Manually trigger send
+    const userMessage = {
+      id: messages.length + 1,
+      role: "user",
+      content: suggestion,
+      timestamp: new Date(),
+    };
+    setMessages((prev) => [...prev, userMessage]);
+    setInputMessage("");
+    setIsLoading(true);
+
+    try {
+      let userLocation = null;
+      let farmDetails = null;
+
+      try {
+        const profileRes = await fetch("/api/auth/me");
+        if (profileRes.ok) {
+          const profile = await profileRes.json();
+          userLocation = { city: profile.city, location: profile.location };
+          if (profile.farm) {
+            farmDetails = {
+              name: profile.farm.name,
+              address: profile.farm.address,
+              size: profile.farm.size,
+              primaryCrop: profile.farm.primaryCrop,
+            };
+          }
+        }
+      } catch (e) {
+        console.warn("Could not fetch user profile:", e);
+      }
+
+      const response = await fetch(`/api/chatbot/ask`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: suggestion,
+          session_id: sessionId,
+          userLocation,
+          farmDetails,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Failed to get response");
+
+      const data = await response.json();
+      const botMessage = {
+        id: messages.length + 2,
+        role: "assistant",
+        content: data.answer || t("chatbot.fallback"),
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, botMessage]);
+    } catch (error) {
+      console.error("Error:", error);
+      const fallbackMessage = {
+        id: messages.length + 2,
+        role: "assistant",
+        content: t("chatbot.learningFallback"),
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, fallbackMessage]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -152,22 +348,33 @@ export default function FarmstellarChatbot() {
               </div>
               <div>
                 <h3 className="text-white font-bold text-lg">
-                  FarmStellar Bot
+                  {t("chatbot.botName")}
                 </h3>
                 <div className="flex items-center gap-1.5">
                   <div className="h-2 w-2 bg-green-300 rounded-full animate-pulse" />
-                  <p className="text-white/90 text-xs">Online</p>
+                  <p className="text-white/90 text-xs">{t("chatbot.online")}</p>
                 </div>
               </div>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsOpen(false)}
-              className="text-white hover:bg-white/20 rounded-full"
-            >
-              <X className="h-5 w-5" />
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleClearChat}
+                className="text-white hover:bg-white/20 rounded-full"
+                title={t("chatbot.clearChat")}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsOpen(false)}
+                className="text-white hover:bg-white/20 rounded-full"
+              >
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
           </div>
 
           {/* Messages Area */}
@@ -176,6 +383,24 @@ export default function FarmstellarChatbot() {
             className="flex-1 overflow-y-auto p-4 bg-linear-to-b from-green-50/30 to-background"
           >
             <div className="space-y-4">
+              {messages.length === 1 && (
+                <div className="mt-4 space-y-3">
+                  <p className="text-xs text-muted-foreground font-semibold px-2">
+                    {t("chatbot.suggestedQueries")}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {suggestedQueries.map((query, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleSuggestionClick(query)}
+                        className="text-xs bg-green-100 hover:bg-green-200 text-green-700 px-3 py-1.5 rounded-full transition-colors border border-green-300"
+                      >
+                        {query}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -194,7 +419,7 @@ export default function FarmstellarChatbot() {
                       <div className="flex items-center gap-2 mb-1">
                         <Bot className="h-4 w-4 text-green-600" />
                         <span className="text-xs font-semibold text-green-600">
-                          FarmStellar Bot
+                          {t("chatbot.botName")}
                         </span>
                       </div>
                     )}
@@ -205,7 +430,11 @@ export default function FarmstellarChatbot() {
                           : "text-foreground"
                       }`}
                     >
-                      {message.content}
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: renderMessageContent(message.content),
+                        }}
+                      />
                     </p>
                     <p
                       className={`text-xs mt-1 ${
@@ -228,7 +457,7 @@ export default function FarmstellarChatbot() {
                       <Bot className="h-4 w-4 text-green-600" />
                       <Loader2 className="h-4 w-4 animate-spin text-green-600" />
                       <span className="text-sm text-muted-foreground">
-                        Thinking...
+                        {t("chatbot.thinking")}
                       </span>
                     </div>
                   </div>
@@ -243,7 +472,7 @@ export default function FarmstellarChatbot() {
               <Input
                 ref={inputRef}
                 type="text"
-                placeholder="Ask me anything about farming..."
+                placeholder={t("chatbot.placeholder")}
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
@@ -264,7 +493,8 @@ export default function FarmstellarChatbot() {
               </Button>
             </div>
             <p className="text-xs text-muted-foreground mt-2 text-center">
-              Powered by FarmStellar AI 🌾
+              {/* {t("chatbot.powered")} */}
+              FarmStellar AI
             </p>
           </div>
         </div>

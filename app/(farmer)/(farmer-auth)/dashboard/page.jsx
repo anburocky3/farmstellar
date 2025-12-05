@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import LeaderboardCard from "@/components/app/leaderboard-card";
 import Chatbot from "@/components/app/farmstellar-chatbot";
-import { UserProgressCard } from "@/components/app/user-progress-card";
+import UserProgressCard from "@/components/app/user-progress-card";
 import { WeatherAlertCard } from "@/components/app/weather-alert-card";
 import { OngoingQuestsCard } from "@/components/app/ongoing-quests-card";
 import { getGreeting } from "@/lib/utils";
